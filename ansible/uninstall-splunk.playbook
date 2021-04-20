@@ -1,0 +1,104 @@
+---
+- hosts: splunk_search_head
+  gather_facts: true
+  environment:
+    - LANG: en_US.utf8
+  tasks:
+    - name: Stop splunk
+      ansible.builtin.command: /opt/splunk/bin/splunk stop
+      tags:
+        - stop
+
+    - name: Delete directory
+      become: yes
+      file:
+        state: absent
+        path: /opt/splunk/
+      tags:
+        - remove
+
+    - name: Delete init file
+      become: yes
+      file:
+        state: absent
+        path: /etc/init.d/splunk
+      tags:
+        - remove
+
+- hosts: splunk_indexer
+  gather_facts: true
+  environment:
+    - LANG: en_US.utf8
+  tasks:
+    - name: Stop splunk
+      ansible.builtin.command: /opt/splunk/bin/splunk stop
+      tags:
+        - stop
+
+    - name: Delete directory
+      become: yes
+      file:
+        state: absent
+        path: /opt/splunk/
+      tags:
+        - remove
+
+    - name: Delete init file
+      become: yes
+      file:
+        state: absent
+        path: /etc/init.d/splunk
+      tags:
+        - remove
+
+- hosts: edusplkds
+  gather_facts: true
+  environment:
+    - LANG: en_US.utf8
+  tasks:
+    - name: Stop splunk
+      ansible.builtin.command: /opt/splunk/bin/splunk stop
+      tags:
+        - stop
+
+    - name: Delete directory
+      become: yes
+      file:
+        state: absent
+        path: /opt/splunk/
+      tags:
+        - remove
+
+    - name: Delete init file
+      become: yes
+      file:
+        state: absent
+        path: /etc/init.d/splunk
+      tags:
+        - remove
+
+- hosts: edusplkuf
+  gather_facts: true
+  environment:
+    - LANG: en_US.utf8
+  tasks:
+    - name: Stop splunk
+      ansible.builtin.command: /opt/splunkforwarder/bin/splunk stop
+      tags:
+        - stop
+
+    - name: Delete directory
+      become: yes
+      file:
+        state: absent
+        path: /opt/splunkforwarder/
+      tags:
+        - remove
+
+    - name: Delete init file
+      become: yes
+      file:
+        state: absent
+        path: /etc/init.d/splunk
+      tags:
+        - remove

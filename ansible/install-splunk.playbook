@@ -1,0 +1,265 @@
+---
+- hosts: splunk_search_head
+  gather_facts: true
+  environment:
+    - LANG: en_US.utf8
+  tasks:
+    - name: Unarchive splunk tar file
+      become: yes
+      ansible.builtin.unarchive:
+        src: splunk-Linux-x86_64.tgz
+        dest: /opt
+      tags:
+        - untar
+
+    - name: Recursively change ownership of a directory
+      become: yes
+      ansible.builtin.file:
+        path: /opt/splunk
+        state: directory
+        recurse: yes
+        owner: splunk
+        group: splunk
+      tags:
+        - untar
+
+    - name: Start splunk
+      ansible.builtin.command: /opt/splunk/bin/splunk start --accept-license --answer-yes --no-prompt --seed-passwd Splunk.2021
+      tags:
+        - start
+
+    - name: Set boot-start
+      become: yes
+      ansible.builtin.command: /opt/splunk/bin/splunk enable boot-start
+      tags:
+        - setup
+
+    - name: Copy file for default-hostname
+      ansible.builtin.copy:
+        src: inputs.conf
+        dest: /opt/splunk/etc/system/local
+        owner: splunk
+        group: splunk
+        mode: '0600'
+      tags:
+        - change-name
+
+    - name: Set default-hostname
+      ansible.builtin.replace:
+        path: /opt/splunk/etc/system/local/inputs.conf
+        regexp: 'SERVERNAME'
+        replace: '{{ server_name }}'
+      tags:
+        - change-name
+
+    - name: Set servername
+      ansible.builtin.replace:
+        path: /opt/splunk/etc/system/local/server.conf
+        regexp: 'serverName = (\w+)'
+        replace: 'serverName = {{ server_name }}'
+      tags:
+        - change-name
+
+    - name: Restart splunk
+      ansible.builtin.command: /opt/splunk/bin/splunk restart
+      tags:
+        - restart
+
+- hosts: splunk_indexer
+  gather_facts: true
+  environment:
+    - LANG: en_US.utf8
+  tasks:
+    - name: Unarchive splunk tar file
+      become: yes
+      ansible.builtin.unarchive:
+        src: splunk-Linux-x86_64.tgz
+        dest: /opt
+      tags:
+        - untar
+
+    - name: Recursively change ownership of a directory
+      become: yes
+      ansible.builtin.file:
+        path: /opt/splunk
+        state: directory
+        recurse: yes
+        owner: splunk
+        group: splunk
+      tags:
+        - untar
+
+    - name: Start splunk
+      ansible.builtin.command: /opt/splunk/bin/splunk start --accept-license --answer-yes --no-prompt --seed-passwd Splunk.2021
+      tags:
+        - start
+
+    - name: Set boot-start
+      become: yes
+      ansible.builtin.command: /opt/splunk/bin/splunk enable boot-start
+      tags:
+        - setup
+
+    - name: Copy file for default-hostname
+      ansible.builtin.copy:
+        src: inputs.conf
+        dest: /opt/splunk/etc/system/local
+        owner: splunk
+        group: splunk
+        mode: '0600'
+      tags:
+        - change-name
+
+    - name: Set default-hostname
+      ansible.builtin.replace:
+        path: /opt/splunk/etc/system/local/inputs.conf
+        regexp: 'SERVERNAME'
+        replace: '{{ server_name }}'
+      tags:
+        - change-name
+
+    - name: Set servername
+      ansible.builtin.replace:
+        path: /opt/splunk/etc/system/local/server.conf
+        regexp: 'serverName = (\w+)'
+        replace: 'serverName = {{ server_name }}'
+      tags:
+        - change-name
+
+    - name: Restart splunk
+      ansible.builtin.command: /opt/splunk/bin/splunk restart
+      tags:
+        - restart
+
+- hosts: edusplkuf
+  gather_facts: true
+  environment:
+    - LANG: en_US.utf8
+  tasks:
+    - name: Unarchive splunk tar file
+      become: yes
+      ansible.builtin.unarchive:
+        src: splunkforwarder-Linux-x86_64.tgz
+        dest: /opt
+      tags:
+        - untar
+
+    - name: Recursively change ownership of a directory
+      become: yes
+      ansible.builtin.file:
+        path: /opt/splunkforwarder
+        state: directory
+        recurse: yes
+        owner: splunk
+        group: splunk
+      tags:
+        - untar
+
+    - name: Start splunk
+      ansible.builtin.command: /opt/splunkforwarder/bin/splunk start --accept-license --answer-yes --no-prompt --seed-passwd Splunk.2021
+      tags:
+        - start
+
+    - name: Set boot-start
+      become: yes
+      ansible.builtin.command: /opt/splunkforwarder/bin/splunk enable boot-start
+      tags:
+        - setup
+
+    - name: Copy file for default-hostname
+      ansible.builtin.copy:
+        src: inputs.conf
+        dest: /opt/splunkforwarder/etc/system/local
+        owner: splunk
+        group: splunk
+        mode: '0600'
+      tags:
+        - change-name
+
+    - name: Set default-hostname
+      ansible.builtin.replace:
+        path: /opt/splunkforwarder/etc/system/local/inputs.conf
+        regexp: 'SERVERNAME'
+        replace: '{{ server_name }}'
+      tags:
+        - change-name
+
+    - name: Set servername
+      ansible.builtin.replace:
+        path: /opt/splunkforwarder/etc/system/local/server.conf
+        regexp: 'serverName = (\w+)'
+        replace: 'serverName = {{ server_name }}'
+      tags:
+        - change-name
+
+    - name: Restart splunk
+      ansible.builtin.command: /opt/splunkforwarder/bin/splunk restart
+      tags:
+        - restart
+
+
+- hosts: edusplkds
+  gather_facts: true
+  environment:
+    - LANG: en_US.utf8
+  tasks:
+    - name: Unarchive splunk tar file
+      become: yes
+      ansible.builtin.unarchive:
+        src: splunk-Linux-x86_64.tgz
+        dest: /opt
+      tags:
+        - untar
+
+    - name: Recursively change ownership of a directory
+      become: yes
+      ansible.builtin.file:
+        path: /opt/splunk
+        state: directory
+        recurse: yes
+        owner: splunk
+        group: splunk
+      tags:
+        - untar
+
+    - name: Start splunk
+      ansible.builtin.command: /opt/splunk/bin/splunk start --accept-license --answer-yes --no-prompt --seed-passwd Splunk.2021
+      tags:
+        - start
+
+    - name: Set boot-start
+      become: yes
+      ansible.builtin.command: /opt/splunk/bin/splunk enable boot-start
+      tags:
+        - setup
+
+    - name: Copy file for default-hostname
+      ansible.builtin.copy:
+        src: inputs.conf
+        dest: /opt/splunk/etc/system/local
+        owner: splunk
+        group: splunk
+        mode: '0600'
+      tags:
+        - change-name
+
+    - name: Set default-hostname
+      ansible.builtin.replace:
+        path: /opt/splunk/etc/system/local/inputs.conf
+        regexp: 'SERVERNAME'
+        replace: '{{ server_name }}'
+      tags:
+        - change-name
+
+    - name: Set servername
+      ansible.builtin.replace:
+        path: /opt/splunk/etc/system/local/server.conf
+        regexp: 'serverName = (\w+)'
+        replace: 'serverName = {{ server_name }}'
+      tags:
+        - change-name
+
+    - name: Restart splunk
+      ansible.builtin.command: /opt/splunk/bin/splunk restart
+      tags:
+        - restart

@@ -1,0 +1,114 @@
+---
+- hosts: splunk_search_head
+  gather_facts: true
+  environment:
+    - LANG: en_US.utf8
+  tasks:
+    - name: Open firewalld port 8000
+      become: yes
+      ansible.posix.firewalld:
+        zone: public
+        immediate: yes
+        port: 8000/tcp
+        permanent: yes
+        state: enabled
+
+    - name: Open firewalld port 8089
+      become: yes
+      ansible.posix.firewalld:
+        zone: public
+        immediate: yes
+        port: 8089/tcp
+        permanent: yes
+        state: enabled
+
+    - name: Open firewalld port 7111
+      become: yes
+      ansible.posix.firewalld:
+        zone: public
+        immediate: yes
+        port: 7111/tcp
+        permanent: yes
+        state: enabled
+
+    - name: Open firewalld port 8191 (kvstore replication)
+      become: yes
+      ansible.posix.firewalld:
+        zone: public
+        immediate: yes
+        port: 8191/tcp
+        permanent: yes
+        state: enabled
+
+- hosts: splunk_indexer
+  gather_facts: true
+  environment:
+    - LANG: en_US.utf8
+  tasks:
+    - name: Open firewalld port 8000
+      become: yes
+      ansible.posix.firewalld:
+        zone: public
+        immediate: yes
+        port: 8000/tcp
+        permanent: yes
+        state: enabled
+
+    - name: Open firewalld port 8089
+      become: yes
+      ansible.posix.firewalld:
+        zone: public
+        immediate: yes
+        port: 8089/tcp
+        permanent: yes
+        state: enabled
+
+    - name: Open firewalld port 8080
+      become: yes
+      ansible.posix.firewalld:
+        zone: public
+        immediate: yes
+        port: 8080/tcp
+        permanent: yes
+        state: enabled
+
+    - name: Open firewalld port 9997
+      become: yes
+      ansible.posix.firewalld:
+        zone: public
+        immediate: yes
+        port: 9997/tcp
+        permanent: yes
+        state: enabled
+
+    - name: Open firewalld port 9887 (index replication port)
+      become: yes
+      ansible.posix.firewalld:
+        zone: public
+        immediate: yes
+        port: 9887/tcp
+        permanent: yes
+        state: enabled
+
+- hosts: edusplkds
+  gather_facts: true
+  environment:
+    - LANG: en_US.utf8
+  tasks:
+    - name: Open firewalld port 8000
+      become: yes
+      ansible.posix.firewalld:
+        zone: public
+        immediate: yes
+        port: 8000/tcp
+        permanent: yes
+        state: enabled
+
+    - name: Open firewalld port 8089
+      become: yes
+      ansible.posix.firewalld:
+        zone: public
+        immediate: yes
+        port: 8089/tcp
+        permanent: yes
+        state: enabled        

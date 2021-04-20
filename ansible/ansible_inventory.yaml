@@ -1,0 +1,42 @@
+all:
+  vars:
+    ansible_user: splunk
+  children:
+    splunk_search_head:
+      hosts:
+        edusplksh1:
+          ansible_port: 22
+          ansible_host: edusplksh1
+          server_name: SH1
+        edusplksh2:
+          ansible_port: 22
+          ansible_host: edusplksh2
+          server_name: SH2
+        edusplkdep:
+          ansible_port: 22
+          ansible_host: edusplkdep
+          server_name: Deployment
+    splunk_indexer:
+      hosts:
+        edusplkinx1:
+          ansible_port: 22
+          ansible_host: edusplkinx1
+          server_name: INX1
+        edusplkinx2:
+          ansible_port: 22
+          ansible_host: edusplkinx2
+          server_name: INX2
+        edusplkcm:
+          ansible_port: 22
+          ansible_host: edusplkcm
+          server_name: CM
+    splunk_forwarder:
+      hosts:
+        edusplkds:
+          ansible_port: 22
+          ansible_host: edusplkds
+          server_name: DS
+        edusplkuf:
+          ansible_port: 22
+          ansible_host: edusplkuf
+          server_name: UF
